@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screens/player_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +14,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const PlayerScreen(),
+      title: 'Music Koko',
+      theme: ThemeData(
+        useMaterial3: true,
+        textTheme: GoogleFonts.robotoMonoTextTheme(
+          Theme.of(context).textTheme,
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.black,
+          brightness: Brightness.light,
+        ),
+      ),
+      home: const OnboardingScreen(),
     );
   }
 }
