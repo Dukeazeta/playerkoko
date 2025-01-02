@@ -23,17 +23,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     OnboardingItem(
       title: 'Pure Sound',
       subtitle: 'Your music, beautifully simple',
-      lottieAsset: 'assets/animations/headphones.json',
+      lottieAsset: 'assets/animations/Headphones.json',
     ),
     OnboardingItem(
       title: 'Solo or Social',
       subtitle: 'Switch modes to match your mood',
-      lottieAsset: 'assets/animations/mode-switch.json',
+      lottieAsset: 'assets/animations/Headphones.json',
     ),
     OnboardingItem(
       title: 'Mark Favorites',
       subtitle: 'Save tracks you love',
-      lottieAsset: 'assets/animations/heart.json',
+      lottieAsset: 'assets/animations/Headphones.json',
     ),
   ];
 
@@ -41,6 +41,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   void initState() {
     super.initState();
     _startAutoSlide();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(animationProvider.notifier).toggleAnimation();
+    });
   }
 
   @override
@@ -74,15 +77,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Widget _buildLottieAnimation(String asset) {
-    final animationState = ref.watch(animationProvider);
-    
-    return Lottie.asset(
-      asset,
-      repeat: true,
-      animate: animationState.isPlaying,
-      onLoaded: (composition) {
-        ref.read(animationProvider.notifier).updateProgress(1.0);
-      },
+    return Center(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.4,
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Lottie.asset(
+          asset,
+          repeat: true,
+          animate: true,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 
@@ -172,14 +177,16 @@ class _OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Spacer(),
           Expanded(
+            flex: 3,
             child: animation,
           ),
-          const SizedBox(height: 32),
+          const Spacer(),
           Text(
             title,
             style: GoogleFonts.robotoMono(
@@ -188,7 +195,7 @@ class _OnboardingPage extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Text(
             subtitle,
             textAlign: TextAlign.center,
@@ -197,7 +204,7 @@ class _OnboardingPage extends StatelessWidget {
               color: Colors.grey[600],
             ),
           ),
-          const SizedBox(height: 100),
+          const Spacer(),
         ],
       ),
     );
