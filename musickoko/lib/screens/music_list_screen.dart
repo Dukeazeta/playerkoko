@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'player_screen.dart';
 
 class MusicListScreen extends StatelessWidget {
   const MusicListScreen({super.key});
@@ -45,7 +46,12 @@ class MusicListScreen extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.play_arrow),
                     onPressed: () {
-                      // TODO: Implement play functionality
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlayerScreen(),
+                        ),
+                      );
                     },
                   ),
                   IconButton(
