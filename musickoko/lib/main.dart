@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/music_list_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const OnboardingScreen(),
+      routes: {
+        '/music_list': (context) => const MusicListScreen(),
+      },
     );
   }
 }

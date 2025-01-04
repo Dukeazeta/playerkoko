@@ -133,11 +133,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               right: 24,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const PlayerScreen(),
-                    ),
-                  );
+                  Navigator.of(context).pushReplacementNamed('/music_list');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
