@@ -84,16 +84,12 @@ class AudioPlayerHandler extends BaseAudioHandler with QueueHandler, SeekHandler
     await super.stop();
   }
 
-  @override
   Future<void> dispose() async {
     await _player.dispose();
-    super.dispose();
   }
 }
 
-final audioHandlerProvider = Provider<AudioHandler>((ref) {
-  throw UnimplementedError();
-});
+final audioHandlerProvider = StateProvider<AudioHandler?>((ref) => null);
 
 final audioHandlerInitProvider = FutureProvider<AudioHandler>((ref) async {
   final audioHandler = await AudioService.init(
