@@ -138,3 +138,7 @@ class SettingsNotifier extends StateNotifier<PlayerSettings> {
     await updateSettings(newSettings);
   }
 }
+
+final playerSettingsProvider = StateNotifierProvider<SettingsNotifier, PlayerSettings>((ref) {
+  return SettingsNotifier(StorageService());
+});
