@@ -9,6 +9,7 @@ import '../widgets/equalizer_widget.dart';
 import '../widgets/playback_controls.dart';
 import '../models/song.dart';
 import '../models/settings.dart';
+import '../providers/providers.dart';
 import '../services/audio_service.dart';
 import '../services/lyrics_service.dart';
 
