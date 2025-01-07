@@ -60,6 +60,43 @@ class PlayerSettings {
       shuffleOnStart: shuffleOnStart ?? this.shuffleOnStart,
     );
   }
+
+  // JSON Serialization
+  Map<String, dynamic> toJson() {
+    return {
+      'enableGaplessPlayback': enableGaplessPlayback,
+      'enableCrossfade': enableCrossfade,
+      'crossfadeDuration': crossfadeDuration.inMilliseconds,
+      'enableEqualizer': enableEqualizer,
+      'equalizerBands': equalizerBands,
+      'playbackSpeed': playbackSpeed,
+      'enableVisualization': enableVisualization,
+      'showLyrics': showLyrics,
+      'enableBackgroundPlay': enableBackgroundPlay,
+      'themeMode': themeMode.index,
+      'enableAutoPlay': enableAutoPlay,
+      'shuffleOnStart': shuffleOnStart,
+    };
+  }
+
+  factory PlayerSettings.fromJson(Map<String, dynamic> json) {
+    return PlayerSettings(
+      enableGaplessPlayback: json['enableGaplessPlayback'] as bool? ?? false,
+      enableCrossfade: json['enableCrossfade'] as bool? ?? false,
+      crossfadeDuration: Duration(milliseconds: json['crossfadeDuration'] as int? ?? 0),
+      enableEqualizer: json['enableEqualizer'] as bool? ?? false,
+      equalizerBands: (json['equalizerBands'] as Map<String, dynamic>?)?.map(
+        (key, value) => MapEntry(int.parse(key), (value as num).toDouble()),
+      ) ?? {},
+      playbackSpeed: (json['playbackSpeed'] as num?)?.toDouble() ?? 1.0,
+      enableVisualization: json['enableVisualization'] as bool? ?? true,
+      showLyrics: json['showLyrics'] as bool? ?? false,
+      enableBackgroundPlay: json['enableBackgroundPlay'] as bool? ?? true,
+      themeMode: ThemeMode.values[json['themeMode'] as int? ?? 0],
+      enableAutoPlay: json['enableAutoPlay'] as bool? ?? false,
+      shuffleOnStart: json['shuffleOnStart'] as bool? ?? false,
+    );
+  }
 }
 
 class SettingsNotifier extends StateNotifier<PlayerSettings> {

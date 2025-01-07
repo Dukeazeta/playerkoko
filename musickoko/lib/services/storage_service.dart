@@ -8,6 +8,7 @@ class StorageService {
   static const String _kThemeMode = 'theme_mode';
   static const String _kVolume = 'volume';
   static const String _kEqualizerSettings = 'equalizer_settings';
+  static const String _kSettings = 'player_settings';
 
   final SharedPreferences _prefs;
 
@@ -142,6 +143,33 @@ class StorageService {
     } catch (e, stack) {
       Logger.e('Error getting equalizer settings', error: e, stackTrace: stack);
       return {};
+    }
+  }
+
+  // Settings
+  Future<PlayerSettings?> getSettings() async {
+    try {
+      final String? jsonString = _prefs.getString(_kSettings);
+      if (jsonString != null) {
+        final Map<String, dynamic> json = jsonDecode(jsonString);
+        return PlayerSettings.fromJson(json);
+      }
+      return null;
+    } catch (e, stack) {
+      Logger.e('Error getting settings', error: e, stackTrace: stack);
+      return null;
+    }
+  }
+
+  Future<bool> saveSettings(PlayerSettings settings) async {
+    try {
+      final String jsonString = jsonEncode(settings.toJson());
+      await _prefs.setString(_kSettings, jsonString);
+      Logger.i('Settings saved successfully');
+      return true;
+    } catch (e, stack) {
+      Logger.e('Error saving settings', error: e, stackTrace: stack);
+      return false;
     }
   }
 
