@@ -101,33 +101,31 @@ class PlayerSettings {
   }
 }
 
-class SettingsNotifier extends AsyncNotifier<PlayerSettings> {
-  final StorageService _storage;
+class SettingsNotifier extends StateNotifier<PlayerSettings> {
+  final StorageService _storageService;
 
-  SettingsNotifier(this._storage) : super(const PlayerSettings()) {
-    _loadSettings();
-  }
+  SettingsNotifier(this._storageService) : super(PlayerSettings());
 
   @override
   Future<PlayerSettings> build() async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    _storage = StorageService(sharedPreferences);
+    _storageService = StorageService(sharedPreferences);
     return _loadSettings();
   }
 
   Future<PlayerSettings> _loadSettings() async {
     // Load settings from storage and update state
-    final settings = await _storage.getSettings();
+    final settings = await _storageService.getSettings();
     if (settings != null) {
       return settings;
     } else {
-      return const PlayerSettings();
+      return PlayerSettings();
     }
   }
 
   Future<void> updateSettings(PlayerSettings settings) async {
     state = settings;
-    await _storage.saveSettings(settings);
+    await _storageService.saveSettings(settings);
   }
 
   Future<void> toggleGaplessPlayback() async {
@@ -187,6 +185,6 @@ class SettingsNotifier extends AsyncNotifier<PlayerSettings> {
   }
 }
 
-final playerSettingsProvider = AsyncNotifierProvider<SettingsNotifier, PlayerSettings>(
+final playerSettingsProvider = StateNotifierProvider<SettingsNotifier, PlayerSettings>(
   SettingsNotifier.new,
 );
