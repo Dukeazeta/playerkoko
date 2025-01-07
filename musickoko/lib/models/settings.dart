@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/storage_service.dart';
+import '../services/settings_service.dart';
 
 class PlayerSettings {
   final bool enableGaplessPlayback;
