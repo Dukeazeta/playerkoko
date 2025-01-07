@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:musickoko/main.dart';
 import '../widgets/media_controls.dart';
 import '../widgets/music_card.dart';
 import '../widgets/audio_visualizer.dart';
