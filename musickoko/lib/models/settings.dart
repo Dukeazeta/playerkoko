@@ -177,6 +177,7 @@ class SettingsNotifier extends StateNotifier<PlayerSettings> {
   }
 }
 
-final playerSettingsProvider = StateNotifierProvider<SettingsNotifier, PlayerSettings>((ref) {
-  return SettingsNotifier(StorageService());
+final playerSettingsProvider = AsyncNotifierProvider<SettingsNotifier, PlayerSettings>((ref) async {
+  final prefs = await SharedPreferences.getInstance();
+  return SettingsNotifier(StorageService(prefs));
 });
