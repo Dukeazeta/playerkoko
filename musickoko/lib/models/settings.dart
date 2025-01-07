@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/storage_service.dart';
 import '../services/settings_service.dart';
 
@@ -100,18 +101,27 @@ class PlayerSettings {
   }
 }
 
-class SettingsNotifier extends StateNotifier<PlayerSettings> {
+class SettingsNotifier extends AsyncNotifier<PlayerSettings> {
   final StorageService _storage;
 
   SettingsNotifier(this._storage) : super(const PlayerSettings()) {
     _loadSettings();
   }
 
-  Future<void> _loadSettings() async {
+  @override
+  Future<PlayerSettings> build() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    _storage = StorageService(sharedPreferences);
+    return _loadSettings();
+  }
+
+  Future<PlayerSettings> _loadSettings() async {
     // Load settings from storage and update state
     final settings = await _storage.getSettings();
     if (settings != null) {
-      state = settings;
+      return settings;
+    } else {
+      return const PlayerSettings();
     }
   }
 
@@ -178,8 +188,5 @@ class SettingsNotifier extends StateNotifier<PlayerSettings> {
 }
 
 final playerSettingsProvider = AsyncNotifierProvider<SettingsNotifier, PlayerSettings>(
-  () async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    return SettingsNotifier(StorageService(sharedPreferences));
-  },
+  SettingsNotifier.new,
 );
