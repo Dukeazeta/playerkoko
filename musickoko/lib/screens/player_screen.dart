@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:musickoko/main.dart';
 import '../widgets/media_controls.dart';
 import '../widgets/music_card.dart';
 import '../widgets/audio_visualizer.dart';
@@ -9,7 +8,6 @@ import '../widgets/lyrics_display.dart';
 import '../widgets/equalizer_widget.dart';
 import '../widgets/playback_controls.dart';
 import '../models/song.dart';
-import '../models/settings.dart';
 import '../providers/providers.dart';
 import '../services/audio_service.dart';
 import '../services/lyrics_service.dart';
